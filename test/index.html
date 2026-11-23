@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Página de Pruebas: QR Code Reader Extension</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --card-border: #334155;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --primary: #4f46e5;
+      --accent: #10b981;
+    }
+    body {
+      margin: 0;
+      padding: 40px 20px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .header {
+      text-align: center;
+      max-width: 800px;
+      margin-bottom: 40px;
+    }
+    .header h1 {
+      font-size: 32px;
+      margin: 0 0 12px 0;
+      color: #ffffff;
+    }
+    .badge-test {
+      display: inline-block;
+      background: rgba(79, 70, 229, 0.2);
+      color: #818cf8;
+      border: 1px solid #6366f1;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+    .instructions {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 18px 24px;
+      margin-bottom: 30px;
+      line-height: 1.6;
+      font-size: 15px;
+      color: var(--text-muted);
+    }
+    .instructions strong {
+      color: var(--text);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      max-width: 1000px;
+      width: 100%;
+    }
+    .qr-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .qr-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--primary);
+    }
+    .qr-card h3 {
+      font-size: 17px;
+      margin: 0 0 8px 0;
+      color: #ffffff;
+    }
+    .desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin: 0 0 16px 0;
+      min-height: 34px;
+    }
+    .qr-img-wrapper {
+      background: #ffffff;
+      padding: 12px;
+      border-radius: 10px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+      margin-bottom: 16px;
+    }
+    .qr-image {
+      display: block;
+      width: 180px;
+      height: 180px;
+    }
+    .value-preview {
+      width: 100%;
+      background: rgba(15, 23, 42, 0.6);
+      border-radius: 6px;
+      padding: 8px;
+      overflow-x: auto;
+      font-size: 11px;
+      color: #94a3b8;
+    }
+    .value-preview code {
+      word-break: break-all;
+    }
+    /* Sección simulada de banner / fotograma con QR */
+    .banner-section {
+      max-width: 1000px;
+      width: 100%;
+      margin-top: 40px;
+      background: linear-gradient(135deg, #1e1b4b, #311042);
+      border: 1px solid #4338ca;
+      border-radius: 14px;
+      padding: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    .banner-text h4 {
+      font-size: 20px;
+      margin: 0 0 8px 0;
+      color: #fff;
+    }
+    .banner-text p {
+      margin: 0;
+      color: #c7d2fe;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="badge-test">Entorno de Pruebas</div>
+    <h1>Extensión Chrome: Lector de Códigos QR</h1>
+    <div class="instructions">
+      👉 <strong>Instrucciones de prueba:</strong><br>
+      1. Pulsa el botón de la extensión en la barra superior para entrar en <strong>Modo Selección</strong>.<br>
+      2. <strong>Detección Automática:</strong> Verás que la extensión resalta automáticamente los códigos QR presentes con un recuadro verde iluminado. Haz clic en cualquiera para seleccionarlo.<br>
+      3. <strong>Selección Manual:</strong> Haz clic y arrastra con el ratón sobre cualquier área para recortar manualmente.<br>
+      4. El <strong>popup.html</strong> se abrirá con el tipo de datos detectado y botones de acción (abrir pestaña, copiar texto, copiar clave wifi, etc.).
+    </div>
+  </div>
+
+  <div class="grid">
+    
+      <div class="qr-card" id="qr-url">
+        <h3>1. Enlace Web (URL)</h3>
+        <p class="desc">Al escanearlo, ofrecerá abrir en pestaña nueva o copiar el enlace.</p>
+        <div class="qr-img-wrapper">
+          <img src="data:image/png;base64,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" alt="1. Enlace Web (URL)" class="qr-image">
+        </div>
+        <div class="value-preview">
+          <code>https://github.com/yabbadabbadev/qr-reader.chrome-extension</code>
+        </div>
+      </div>
+    
+      <div class="qr-card" id="qr-wifi">
+        <h3>2. Red Wi-Fi (WIFI:...)</h3>
+        <p class="desc">Ofrecerá mostrar/ocultar contraseña, copiar clave y copiar credenciales completas.</p>
+        <div class="qr-img-wrapper">
+          <img src="data:image/png;base64,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" alt="2. Red Wi-Fi (WIFI:...)" class="qr-image">
+        </div>
+        <div class="value-preview">
+          <code>WIFI:S:DemoWiFi_5G;T:WPA;P:SuperPasswordDemo123!;;</code>
+        </div>
+      </div>
+    
+      <div class="qr-card" id="qr-email">
+        <h3>3. Correo Electrónico (mailto:)</h3>
+        <p class="desc">Ofrecerá redactar correo al destinatario o copiar dirección.</p>
+        <div class="qr-img-wrapper">
+          <img src="data:image/png;base64,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" alt="3. Correo Electrónico (mailto:)" class="qr-image">
+        </div>
+        <div class="value-preview">
+          <code>mailto:demo@example.com?subject=Prueba%20QR%20Reader&amp;body=Hola!</code>
+        </div>
+      </div>
+    
+      <div class="qr-card" id="qr-phone">
+        <h3>4. Teléfono (tel:)</h3>
+        <p class="desc">Ofrecerá llamar al número o copiarlo al portapapeles.</p>
+        <div class="qr-img-wrapper">
+          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAANwAAADcCAYAAAAbWs+BAAAAAklEQVR4AewaftIAAATfSURBVO3BwZFcORIFwWBaCZBH6AD9RYEOOEIDLu9j2zjU55vq6XD/9fsPJEUUkmIKSTGFpJhCUkwhKaaQFFNIiikkxRSSYgpJMYWkmEJSTCEpppAUU0iKKSTFFJJiXjykx+QnOnvxrh6Tm7MXNz0m7zp7cdNj8hOdvXhXISmmkBRTSIopJMUUkmIKSTGFpJhCUsyLoLMX30mPybt6TJ7QY3Jz9uJTnL34TnpMEgpJMYWkmEJSTCEpppAUU0iKKSTFFJJiXnyYHpOEsxcJZy9uekxSeky+cvYipcck4ezFpygkxRSSYgpJMYWkmEJSTCEpppAUU0iKeaF/3dmLmx6Tmx4TfbZCUkwhKaaQFFNIiikkxRSSYgpJMS/0V/WYPOHsxU2PiT5bISmmkBRTSIopJMUUkmIKSTGFpJhCUsyLD3P24r/k7MUTekyecPbiU5y9+GkKSTGFpJhCUkwhKaaQFFNIiikkxRSSYl4E9Zj8ND0mN2cvnnD24qbH5CtnL57QY6J/KiTFFJJiCkkxhaSYQlJMISmmkBRTSIr59fsP9K/qMbk5e6Hvr5AUU0iKKSTFFJJiCkkxhaSYQlLMi4f0mNycvbjpMbk5e/GVHpObsxc3PSY3Zy/edfbipsfk5uzFTY/JV85epPSY3Jy9eFePyc3Zi4RCUkwhKaaQFFNIiikkxRSSYgpJMYWkmBf6v85efIqzFzc9JjdnL97VY3Jz9uLm7MWn6DG5OXvxrkJSTCEpppAUU0iKKSTFFJJiCkkxhaSYFw85e3HTY/KEHpOvnL14Qo/Ju85e3PSY3Jy9SOgxeUKPif6pkBRTSIopJMUUkmIKSTGFpJhCUkwhKebFhzl7cdNj8q4ek5uzF+/qMbk5e5HSY/KusxffSY/JzdmLhEJSTCEpppAUU0iKKSTFFJJiCkkxhaSYX7//IKTH5Kc5e/GEHpMnnL34So9JytmLhB6TJ5y9eFchKaaQFFNIiikkxRSSYgpJMYWkmBdBZy9+mh6TJ5y9uOkxedfZi5sekyf0mNycvfhKj8nN2YubHpOEQlJMISmmkBRTSIopJMUUkmIKSTGFpJgXD+kx+YnOXnzl7MVNj8kTzl7c9Jh85ezFzdmLJ/SYJPSYfIpCUkwhKaaQFFNIiikkxRSSYgpJMYWkmBdBZy++kx6ThLMXNz0mTzh78a4ekyecvbjpMfnK2YvvpJAUU0iKKSTFFJJiCkkxhaSYQlJMISnmxYfpMUk4e5HQY3Jz9uIJZy9uekwSzl7c9Jgk9Jg84ezFuwpJMYWkmEJSTCEpppAUU0iKKSTFFJJiXuivOntx02Nyc/bipsfk5uzFu3pMnnD24qbH5Cs9Jk84e5FQSIopJMUUkmIKSTGFpJhCUkwhKeaF/qoekyf0mPzX9JjcnL1I6DG5OXvxrkJSTCEpppAUU0iKKSTFFJJiCkkxhaSYFx/m7MV/ydmLmx6TJ5y9eFePySfpMfnK2YubHpObsxcJhaSYQlJMISmmkBRTSIopJMUUkmIKSTEvgnpMfpoek5uzFzc9JglnL256TJ5w9uJT9JjcnL14VyEpppAUU0iKKSTFFJJiCkkxhaSYQlLMr99/ICmikBRTSIopJMUUkmIKSTGFpJhCUkwhKaaQFFNIiikkxRSSYgpJMYWkmEJSTCEp5n9GpREt0EWLdwAAAABJRU5ErkJggg==" alt="4. Teléfono (tel:)" class="qr-image">
+        </div>
+        <div class="value-preview">
+          <code>tel:+34912345678</code>
+        </div>
+      </div>
+    
+      <div class="qr-card" id="qr-text">
+        <h3>5. Texto Plano</h3>
+        <p class="desc">Texto formateado para previsualizar y copiar directamente.</p>
+        <div class="qr-img-wrapper">
+          <img src="data:image/png;base64,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" alt="5. Texto Plano" class="qr-image">
+        </div>
+        <div class="value-preview">
+          <code>Este es un código QR de prueba con texto plano escaneado exitosamente.</code>
+        </div>
+      </div>
+    
+  </div>
+
+  <div class="banner-section">
+    <div class="banner-text">
+      <h4>🎬 Simulación de Fotograma / Vídeo</h4>
+      <p>Este código QR está integrado en un banner con degradado complejo para verificar que la captura y detección de píxeles funciona sobre cualquier fondo o animación.</p>
+    </div>
+    <div class="qr-img-wrapper" style="margin: 0;">
+      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIwAAACMCAYAAACuwEE+AAAAAklEQVR4AewaftIAAAP8SURBVO3BW24bSBAEwawG73/lXH8PKGCa1OphV0T8g6pLQ9XCULUwVC0MVQtD1cKDDyThJ1E5JeGk8kwSTiqnJJxUTkk4qbwjCT+JymmoWhiqFoaqhaFq4cGCyldIwg2VUxI+WxLekYSTyg2Vr5CEG0PVwlC1MFQtDFULD96UhHeovCoJJ5VbSXiVyndJwjtUXjVULQxVC0PVwlC18OAXUzkl4ZbKKQk3knBSeUblbzFULQxVC0PVwlC18OAfofIqlVMS/kVD1cJQtTBULQxVC0PVwoM3qXyXJJxUbiXhpPLTqXyXoWphqFoYqhaGqoUHC0n4rZJwUjkl4aTyjiScVG4k4ScZqhaGqoWhamGoWoh/8BdJwi2VVyXhHSq/0VC1MFQtDFULQ9XCgw8k4aRySsJJ5R1JuKFyUnkmCa9Kwg2VZ5LwqiScVG4l4aRySsJJ5TRULQxVC0PVwlC18OB/kIRbKieVr5CEk8oNlVMSnlG5kYR3JOGkckrCq4aqhaFqYahaGKoWhqqFBx9QeZXKrSTcULmRhFsqpyScVL6Cyo0k3ErCSeWUhBtD1cJQtTBULQxVCw8WknBSOSXhpHJL5Ssk4aRySsJJ5aTyTBJepfIOlRsqN4aqhaFqYahaGKoWHnwgCSeVUxJOKrdUTkk4qZyScEvlRhJelYRbKqck3FD5bEk4qZyGqoWhamGoWhiqFh58QOWGyo0k3FI5JeG7qHy2JNxIwknlHUl41VC1MFQtDFULQ9XCgw8k4YbKDZVnknBKwknlRhI+WxI+m8opCSeVW0m4oXJKwo2hamGoWhiqFoaqhQcfULmRhJPKKQm3VG4k4R1JuKFySsItlVMSTiqnJLxD5YbKjaFqYahaGKoWhqqFoWoh/sETSbihciMJz6icknBSeUcSTio3kvAbqNxIwknlxlC1MFQtDFULQ9XCgw+ofCaVWyo3kvCTqDyThJPKq5LwDpVTEk4qp6FqYahaGKoWhqqFBx9Iwk+ickPlVhJOKieVr5CEk8pPMlQtDFULQ9XCULXwYEHlKyThhsopCbdUbiThpHJKwjtUvkISXjVULQxVC0PVwlC18OBNSXiHymdSeSYJpyR8lyT8RkPVwlC1MFQtDFULQ9XCg3+Eyo0knFTeoXJKwknlRhJuJeGGyo2hamGoWhiqFoaqhQe/WBJOKp8tCTdUnknCSeVGEm4l4aRySsIpCSeV01C1MFQtDFULQ9XCgzepfBeVUxI+m8opCack3ErCSeUdKjdUXjVULQxVC0PVwlC18GAhCT9JEk4qzyThpHIjCTdUnknCjSScVG4l4aRyIwknldNQtTBULQxVC0PVQvyDqktD1cJQtTBULQxVC/8Bp1OgMHaAHSAAAAAASUVORK5CYII=" class="qr-image" style="width: 120px; height: 120px;" alt="Banner QR">
+    </div>
+  </div>
+</body>
+</html>

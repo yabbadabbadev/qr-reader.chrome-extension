@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lector QR</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup-container">
+    <header class="popup-header">
+      <div class="header-title">
+        <img src="../icons/icon-48.png" alt="Logo" class="header-icon">
+        <h1>Lector QR</h1>
+      </div>
+      <span id="qr-badge" class="badge">Escaneado</span>
+    </header>
+
+    <main class="popup-main">
+      <!-- Vista de resultado escaneado -->
+      <section id="result-view" class="view hidden">
+        <div id="content-card" class="content-card">
+          <!-- Contenido renderizado dinámicamente -->
+        </div>
+
+        <div id="action-buttons" class="action-buttons">
+          <!-- Botones de acción dinámicos -->
+        </div>
+      </section>
+
+      <!-- Vista vacía si no se ha escaneado nada todavía -->
+      <section id="empty-view" class="view">
+        <div class="empty-icon-wrap">🔍</div>
+        <p class="empty-text">No hay ningún código QR escaneado recientemente.</p>
+        <button id="btn-start-scan" class="btn btn-primary">Escanear QR en pantalla</button>
+      </section>
+    </main>
+
+    <footer class="popup-footer">
+      <button id="btn-rescan" class="btn btn-secondary">Escanear otro QR</button>
+    </footer>
+  </div>
+
+  <script src="../lib/qr-parser.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

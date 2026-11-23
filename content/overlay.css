@@ -1,0 +1,144 @@
+/* content/overlay.css */
+:host {
+  all: initial;
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 2147483647;
+  display: block;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  user-select: none;
+  cursor: crosshair;
+}
+
+.qr-backdrop {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(1.5px);
+}
+
+.qr-top-bar {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1e293b;
+  color: #f8fafc;
+  padding: 10px 20px;
+  border-radius: 9999px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  z-index: 10;
+  pointer-events: auto;
+}
+
+.qr-close-btn {
+  background: rgba(255, 255, 255, 0.15);
+  border: none;
+  color: #f8fafc;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  line-height: 1;
+  transition: background 0.15s;
+}
+
+.qr-close-btn:hover {
+  background: rgba(239, 68, 68, 0.85);
+}
+
+/* Marcos interactivos sobre QR detectados */
+.qr-detected-box {
+  position: absolute;
+  border: 2px solid #10b981;
+  border-radius: 8px;
+  background: rgba(16, 185, 129, 0.22);
+  cursor: pointer;
+  box-shadow: 0 0 16px rgba(16, 185, 129, 0.65);
+  transition: transform 0.15s, background 0.15s;
+  pointer-events: auto;
+  z-index: 5;
+  animation: qrPulse 2s infinite ease-in-out;
+}
+
+.qr-detected-box:hover {
+  background: rgba(16, 185, 129, 0.45);
+  transform: scale(1.02);
+}
+
+.qr-detected-tag {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #10b981;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  pointer-events: none;
+}
+
+/* Recuadro de recorte manual */
+.qr-marquee-box {
+  position: absolute;
+  border: 2px dashed #38bdf8;
+  background: rgba(56, 189, 248, 0.2);
+  border-radius: 4px;
+  pointer-events: none;
+  z-index: 8;
+  box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.25);
+}
+
+/* Toast de alerta / aviso */
+.qr-toast {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #ef4444;
+  color: #ffffff;
+  padding: 9px 18px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35);
+  z-index: 10;
+  pointer-events: none;
+  animation: toastFadeIn 0.2s ease-out;
+}
+
+@keyframes qrPulse {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 22px rgba(16, 185, 129, 0.9);
+  }
+}
+
+@keyframes toastFadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 10px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
